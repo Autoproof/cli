@@ -1,0 +1,8 @@
+apikey: 9a9582d5a0b748f9b9a873de6b2f4596
+ignore:
+    - .autoproof
+    - .DS_Store
+    - .git
+    - .svn
+    - .cvs
+projectname: autoproof
