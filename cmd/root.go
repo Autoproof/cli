@@ -3,13 +3,20 @@ package cmd
 import (
 	"os"
 
-	"github.com/autoproof/cli/project"
 	"github.com/spf13/cobra"
+
+	"github.com/autoproof/cli/project"
+)
+
+var (
+	cliVersion = "dev"
 )
 
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
-	Use: "autoproof",
+	Use:     "autoproof",
+	Version: cliVersion,
+
 	Short: `Automatic code & content protection tool.
 
 See 'https://autoproof.dev/docs' for an overview of the system.
