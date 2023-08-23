@@ -37,6 +37,7 @@ changelog:
     exclude:
       - '^docs:'
       - '^test:'
+
 nfpms:
   - formats:
       - deb
@@ -44,3 +45,14 @@ nfpms:
     vendor: autoproof.dev
     homepage: https://autoproof.dev
     maintainer: autoproof.dev
+
+brews:
+  - tap:
+      owner: autoproof
+      name: homebrew-autoproof
+    name: autoproof
+    homepage: "https://github.com/Autoproof/homebrew-autoproof"
+    description: "command-line interface for automatic code & content protection"
+    folder: Formula
+    install: |
+      bin.install "autoproofcli"
