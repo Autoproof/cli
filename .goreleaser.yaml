@@ -50,6 +50,7 @@ brews:
   - tap:
       owner: autoproof
       name: homebrew-autoproof
+      branch: main
     name: autoproof
     homepage: "https://github.com/Autoproof/homebrew-autoproof"
     description: "command-line interface for automatic code & content protection"
