@@ -1,6 +1,7 @@
 package cmd
 
 import (
+	"errors"
 	"fmt"
 	"os"
 
@@ -37,12 +38,17 @@ var snapshotCmd = &cobra.Command{
 			return fmt.Errorf("failed to open project: %w", err)
 		}
 
+		apiKey, ok := p.Config().Get("apiKey").(string)
+		if !ok {
+			return errors.New("failed to read api key: key not found")
+		}
+
 		snapshot, err := p.Snapshot(cmd.Context())
 		if err != nil {
 			return fmt.Errorf("failed to create snapshot: %w", err)
 		}
 
-		apiKeyTransport := &autoproofapi.APIKeyTransport{APIKey: "9a9582d5a0b748f9b9a873de6b2f4596"}
+		apiKeyTransport := &autoproofapi.APIKeyTransport{APIKey: apiKey}
 		apiClient := autoproofapi.NewClient(autoproofapi.WithCustomClient(apiKeyTransport.Client()))
 
 		mode := autoproofapi.ProductionSnapshotMode
