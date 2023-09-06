@@ -49,7 +49,7 @@ nfpms:
     maintainer: autoproof.dev
 
 brews:
-  - tap:
+  - repository:
       owner: autoproof
       name: homebrew-autoproof
       branch: main
@@ -62,4 +62,12 @@ brews:
 
 dockers:
   - image_templates:
-      - "autoproof/cli:{{ .Tag }}"
+      - "ghcr.io/autoproof/cli:{{ .Tag }}"
+    dockerfile: ./Dockerfile.goreleaser
+    build_flag_templates:
+      - "--pull"
+      - "--label=org.opencontainers.image.created={{.Date}}"
+      - "--label=org.opencontainers.image.name={{.ProjectName}}"
+      - "--label=org.opencontainers.image.revision={{.FullCommit}}"
+      - "--label=org.opencontainers.image.version={{.Version}}"
+      - "--label=org.opencontainers.image.source={{.GitURL}}"
