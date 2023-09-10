@@ -62,6 +62,7 @@ brews:
 
 dockers:
   - image_templates:
+      - "ghcr.io/autoproof/cli:latest"
       - "ghcr.io/autoproof/cli:{{ .Tag }}"
     dockerfile: ./Dockerfile.goreleaser
     build_flag_templates:
