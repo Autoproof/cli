@@ -1,6 +1,6 @@
 # autoproofcli
 
-autoproofcli is a Golang project that provides a command-line interface for automatic code & content protection.
+autoproofcli is a project that provides a command line interface for Autoproof: Automatic Code & Content Protection.
 
 ## Installation
 
