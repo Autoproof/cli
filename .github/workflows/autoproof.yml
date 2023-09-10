@@ -13,5 +13,7 @@ jobs:
         with:
           fetch-depth: 0
       - name: Autoproof snapshot
+        env:
+          AUTOPROOF_APIKEY: ${{ secrets.AUTOPROOF_APIKEY }}
         run: |
-          autoproof snapshot -m "GHA on {{ github.sha }}"
+          autoproofcli snapshot -m "GHA on ${{ github.repository }}@${{ github.sha }}"
