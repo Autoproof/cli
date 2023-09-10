@@ -112,7 +112,7 @@ information about available commands and their usage in the project documentatio
 ### GitHub Actions
 
 This GitHub Action Workflow is meant to automatically generate a snapshot using the Autoproof tool whenever 
-you push to the main branch of your repository:
+you push to the **main** branch of your repository:
 
 ```yaml
 name: Autoproof Snapshot
@@ -138,6 +138,33 @@ jobs:
           autoproofcli snapshot -m "GHA on ${{ github.repository }}@${{ github.sha }}: ${{ github.event.head_commit.message }}"
 ```
 
-Security Note:
+**Security Note**:
+
+Make sure your Autoproof API Key (AUTOPROOF_APIKEY) is stored in your repository's secrets for confidentiality.
+
+### Gitlab CI / CD
+
+This GitLab CI configuration automates the process of creating a snapshot using the Autoproof CLI tool when
+changes are pushed to the **main** branch of your GitLab repository.
+
+```yaml
+stages:
+  # ... other stages
+  - autoproof
+
+autoproof:
+  stage: autoproof
+  # NOTE: Instead of the "latest" tag, we recommend using the stable version tag of the autoproof/cli image 
+  # to have explicit control over updates (to avoid breaking backwards compatibility).
+  image: 
+    name: ghcr.io/autoproof/cli:latest
+    entrypoint: [""]
+  only:
+    - main
+  script:
+    - autoproofcli snapshot -m "GitLab CI on $CI_PROJECT_PATH@${CI_COMMIT_SHA}: $CI_COMMIT_TITLE"
+```
+
+**Security Note**:
 
 Make sure your Autoproof API Key (AUTOPROOF_APIKEY) is stored in your repository's secrets for confidentiality.
