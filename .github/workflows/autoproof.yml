@@ -16,4 +16,4 @@ jobs:
         env:
           AUTOPROOF_APIKEY: ${{ secrets.AUTOPROOF_APIKEY }}
         run: |
-          autoproofcli snapshot -m "GHA on ${{ github.repository }}@${{ github.sha }}"
+          autoproofcli snapshot -m "GHA on ${{ github.repository }}@${{ github.sha }}: ${{ github.event.head_commit.message }}"

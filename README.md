@@ -123,7 +123,7 @@ on:
 jobs:
   autoproof:
     runs-on: ubuntu-latest
-    # NOTE: We recommend using the latest stable version of autoproof/cli instead of the latest 
+    # NOTE: Instead of the "latest" tag, we recommend using the stable version tag of the autoproof/cli image 
     # to have explicit control over updates (to avoid breaking backwards compatibility).
     container: ghcr.io/autoproof/cli:latest
     steps:
@@ -135,7 +135,7 @@ jobs:
         env:
           AUTOPROOF_APIKEY: ${{ secrets.AUTOPROOF_APIKEY }}
         run: |
-          autoproofcli snapshot -m "GHA on ${{ github.repository }}@${{ github.sha }}"
+          autoproofcli snapshot -m "GHA on ${{ github.repository }}@${{ github.sha }}: ${{ github.event.head_commit.message }}"
 ```
 
 Security Note:
