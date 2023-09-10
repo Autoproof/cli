@@ -6,7 +6,7 @@ on:
 jobs:
   autoproof:
     runs-on: ubuntu-latest
-    container: ghcr.io/autoproof/cli:v0.1.5
+    container: ghcr.io/autoproof/cli:latest
     steps:
       - name: Checkout source code
         uses: actions/checkout@v3
