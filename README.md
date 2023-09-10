@@ -105,3 +105,39 @@ autoproofcli command [arguments]
 
 Replace `command` with the specific command you want to execute and provide any required arguments. You can find 
 information about available commands and their usage in the project documentation or by running `autoproofcli --help`.
+
+
+## CI / CD Integration
+
+### GitHub Actions
+
+This GitHub Action Workflow is meant to automatically generate a snapshot using the Autoproof tool whenever 
+you push to the main branch of your repository:
+
+```yaml
+name: Autoproof Snapshot
+on:
+  push:
+    branches:
+      - main
+jobs:
+  autoproof:
+    runs-on: ubuntu-latest
+    # NOTE: We recommend using the latest stable version of autoproof/cli instead of the latest 
+    # to have explicit control over updates (to avoid breaking backwards compatibility).
+    container: ghcr.io/autoproof/cli:latest
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Autoproof snapshot
+        env:
+          AUTOPROOF_APIKEY: ${{ secrets.AUTOPROOF_APIKEY }}
+        run: |
+          autoproofcli snapshot -m "GHA on ${{ github.repository }}@${{ github.sha }}"
+```
+
+Security Note:
+
+Make sure your Autoproof API Key (AUTOPROOF_APIKEY) is stored in your repository's secrets for confidentiality.
