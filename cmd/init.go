@@ -7,10 +7,10 @@ import (
 	"path"
 	"strings"
 
-	"github.com/autoproof/cli/project"
 	"github.com/manifoldco/promptui"
-
 	"github.com/spf13/cobra"
+
+	"github.com/autoproof/cli/project"
 )
 
 const (
@@ -95,20 +95,6 @@ var initCmd = &cobra.Command{
 			return err
 		}
 
-		//if err := os.MkdirAll(path.Join(currentDir, ".autoproof"), 0770); err != nil {
-		//	return err
-		//}
-		//
-		//v := viper.New()
-		//v.Set("projectName", projectName)
-		//v.Set("apiKey", apiKey)
-		//v.Set("ignore", defaultIgnoreList)
-		//
-		//v.AddConfigPath(path.Join(currentDir, ".autoproof"))
-		//if err := v.WriteConfigAs(path.Join(currentDir, ".autoproof", "config.yml")); err != nil {
-		//	return err
-		//}
-		//
 		_, _ = fmt.Fprintf(cmd.OutOrStdout(), "Project %q has been successfully initialized.\n", p.Name())
 		return nil
 	},
