@@ -55,7 +55,7 @@ brews:
       branch: main
     name: autoproof
     homepage: "https://github.com/Autoproof/homebrew-autoproof"
-    description: "command-line interface for automatic code & content protection"
+    description: "Command-line interface for automatic code & content protection"
     folder: Formula
     install: |
       bin.install "autoproofcli"
