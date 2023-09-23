@@ -45,6 +45,9 @@ func (p *Project) Snapshot(ctx context.Context) (*Snapshot, error) {
 		}
 
 		if il.has(filepath.Base(filePath)) {
+			if info.IsDir() {
+				return filepath.SkipDir
+			}
 			return nil
 		}
 
