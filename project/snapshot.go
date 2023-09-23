@@ -45,7 +45,7 @@ func (p *Project) Snapshot(ctx context.Context) (*Snapshot, error) {
 		}
 
 		if il.has(filepath.Base(filePath)) {
-			return filepath.SkipDir
+			return nil
 		}
 
 		if info.IsDir() {
@@ -54,15 +54,19 @@ func (p *Project) Snapshot(ctx context.Context) (*Snapshot, error) {
 
 		file, err := os.Open(filePath)
 		if err != nil {
-			return fmt.Errorf("failed to open file: %w", err)
+			return fmt.Errorf("open file: %w", err)
 		}
+		defer func() { _ = file.Close() }()
 
 		h := newKeccakHash()
 		if _, err := io.Copy(h, file); err != nil {
-			return fmt.Errorf("failed to calculate hash for %s: %w", filePath, err)
+			return fmt.Errorf("calculate file hash for %s: %w", filePath, err)
 		}
 
-		relFilePath, _ := filepath.Rel(p.path, filePath)
+		relFilePath, err := filepath.Rel(p.path, filePath)
+		if err != nil {
+			return fmt.Errorf("file path relative to project root: %w", err)
+		}
 		snapshot.Items = append(snapshot.Items, SnapshotItem{
 			Filename: relFilePath,
 			Hash:     h.String(),
