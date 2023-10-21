@@ -107,7 +107,71 @@ Replace `command` with the specific command you want to execute and provide any 
 information about available commands and their usage in the project documentation or by running `autoproofcli --help`.
 
 
+## Getting Started
+
+### Init
+
+To initialize a new Autoproof project, run the following command in the root directory of your code base:
+
+```shell
+$ autoproofcli init
+```
+
+Following the prompts, specify **project name** and **API key**. The **API key** can be obtained in your 
+personal account on the `API Keys` page. If there is no project with the name you specified in your personal account, 
+a new one will be created during the subsequent notarization.
+
+If project initialization is successful, you will see the following message:
+
+```shell
+$ autoproofcli init
+✔ Project name: my-project
+✔ API key: ********************
+Project "my-project" has been successfully initialized.
+```
+
+### Make notarization
+
+To make a notarization, run the following command in the root directory of your code base:
+
+```shell
+$ autoproofcli snapshot -m "Notarization additional meta info and description
+```
+
+To make a _test_ notarization, you can add the `--dry-run` flag to previous command:
+
+```shell
+$ autoproofcli snapshot --dry-run -m "Notarization additional meta info and description"
+```
+
+If notarization is successful, you will see the following message:
+
+```
+Notarization started Snapshot object (snapshotID). You can monitor a status on project page: 
+https://app.autoproof.dev/********************
+```
+
+If you see the following message, then the notarization was not successful:
+
+```
+Error: Autoproof API request finished with non-OK status 403:
+Usage:
+  autoproof snapshot [flags]
+
+Flags:
+  -n, --dry-run          Perform hash saving in either testing or production mode.
+  -h, --help             help for snapshot
+  -m, --message string   Short description sent along with the snapshot to the copyright registration center.
+```
+
+In this case, you should check the correctness of the specified API key. 
+You can find the API key in your personal account on the `API Keys` page.
+
 ## CI / CD Integration
+
+After initializing your project with Autoproof, you may want to integrate Autoproof into your CI / CD pipeline.
+
+Here are some recipes on how to do this for popular CI / CD solutions.
 
 ### GitHub Actions
 
