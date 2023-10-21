@@ -9,9 +9,11 @@ import (
 )
 
 const (
+	// AutoproofHomeDirName is a name of the directory where autoproof stores its data.
 	AutoproofHomeDirName = ".autoproof"
 )
 
+// Project is a representation of the autoproof project.
 type Project struct {
 	name string
 	path string
@@ -28,6 +30,8 @@ type Snapshot struct {
 	Items []SnapshotItem
 }
 
+// FromPath returns a Project from the given path.
+// Path must be a path to the project directory (i.e. a directory where .autoproof directory is located).
 func FromPath(projectPath string) (*Project, error) {
 	projectPath, err := filepath.Abs(projectPath)
 	if err != nil {
@@ -50,7 +54,7 @@ func FromPath(projectPath string) (*Project, error) {
 	}
 
 	if err := p.readConfig(); err != nil {
-		return nil, fmt.Errorf("failed to read project config: %w", err)
+		return nil, fmt.Errorf("read project config: %w", err)
 	}
 
 	p.name = p.Config().Get("projectName").(string)
@@ -64,13 +68,13 @@ func New(name, path string) (*Project, error) {
 	}
 
 	if err := os.MkdirAll(filepath.Join(path, AutoproofHomeDirName), 0777); err != nil {
-		return nil, fmt.Errorf("failed to create project dir: %w", err)
+		return nil, fmt.Errorf("create project dir: %w", err)
 	}
 
 	if err := p.readConfig(); err != nil {
 		// config not exists at this moment. we create him later.
 		if !errors.Is(err, fs.ErrNotExist) {
-			return nil, fmt.Errorf("failed to read config: %w", err)
+			return nil, fmt.Errorf("read config: %w", err)
 		}
 	}
 
