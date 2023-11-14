@@ -233,6 +233,30 @@ autoproof:
 
 Make sure your Autoproof API Key (AUTOPROOF_APIKEY) is stored in your repository's secrets for confidentiality.
 
+### Bitbucket Pipelines
+
+This Bitbucket Pipelines configuration automates the process of creating a snapshot using the Autoproof CLI tool when
+changes are pushed to the **main** branch of your Bitbucket repository.
+
+**NOTE**: `AUTOPROOF_APIKEY` should be stored in your repository's secrets for confidentiality.
+
+```yaml
+pipelines:
+  branches:
+    main: # Change this to the branch you want to trigger the pipeline.
+      - step:
+          name: Autoproof Notarization
+          # NOTE: Instead of the "latest" tag, we recommend using the stable version tag of the autoproof/cli image 
+          # to have explicit control over updates (to avoid breaking backwards compatibility).
+          image: ghcr.io/autoproof/cli:latest
+          script:
+            - autoproofcli snapshot -m "Bitbucket Pipelines ${BITBUCKET_BUILD_NUMBER} on ${BITBUCKET_REPO_SLUG}@${BITBUCKET_COMMIT}"
+```
+
+**Security Note**:
+
+Make sure your Autoproof API Key (AUTOPROOF_APIKEY) is stored in your repository's secrets for confidentiality.
+
 ### Jenkins
 
 This Jenkins CI configuration automates the process of creating a snapshot using the Autoproof CLI tool when
