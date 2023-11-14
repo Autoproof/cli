@@ -232,3 +232,38 @@ autoproof:
 **Security Note**:
 
 Make sure your Autoproof API Key (AUTOPROOF_APIKEY) is stored in your repository's secrets for confidentiality.
+
+### Jenkins
+
+This Jenkins CI configuration automates the process of creating a snapshot using the Autoproof CLI tool when
+changes are pushed to the **main** branch of your GitLab repository.
+
+```groovy
+pipeline {
+    agent {
+        docker {
+            # NOTE: Instead of the "latest" tag, we recommend using the stable version tag of the autoproof/cli image 
+            # to have explicit control over updates (to avoid breaking backwards compatibility).
+            image 'ghcr.io/autoproof/cli:latest'
+        }
+    }
+    
+    stages {
+        stage('Checkout source code') {
+            steps {
+                checkout scm
+            }
+        }
+
+        stage('Notarization') {
+            steps {
+                sh 'autoproofcli snapshot -m "Jenkins ${BUILD_TAG} on ${GIT_URL}@${GIT_COMMIT}"'
+            }
+        }
+    }
+}
+```
+
+**Security Note**:
+
+Make sure your Autoproof API Key (AUTOPROOF_APIKEY) is stored in your repository's secrets for confidentiality.
