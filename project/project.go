@@ -3,7 +3,6 @@ package project
 import (
 	"errors"
 	"fmt"
-	"io/fs"
 	"os"
 	"path/filepath"
 )
@@ -72,10 +71,7 @@ func New(name, path string) (*Project, error) {
 	}
 
 	if err := p.readConfig(); err != nil {
-		// config not exists at this moment. we create him later.
-		if !errors.Is(err, fs.ErrNotExist) {
-			return nil, fmt.Errorf("read config: %w", err)
-		}
+		return nil, fmt.Errorf("read config: %w", err)
 	}
 
 	p.Config().Set("projectName", name)

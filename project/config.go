@@ -111,7 +111,7 @@ func (p *Project) readConfig() error {
 	public.SetEnvPrefix("AUTOPROOF")
 	public.SetConfigFile(path.Join(p.path, AutoproofHomeDirName, "config.yml"))
 
-	if err := public.ReadInConfig(); err != nil {
+	if err := public.ReadInConfig(); err != nil && !errors.Is(err, fs.ErrNotExist) {
 		return fmt.Errorf("read public config: %w", err)
 	}
 
